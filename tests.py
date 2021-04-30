@@ -1,9 +1,12 @@
-import util
+import pytest
+
 import numpy as np
 import scipy
 import scipy.optimize
 import scipy.stats
-import pytest
+
+import util
+import analysis_funcs
 
 
 def other_clopper_lower(x, n, alpha):
@@ -68,9 +71,9 @@ def test_clopper_upper(x, n, alpha):
                              (np.array([1, 0, 5]), np.array([5, 4, 5]), np.array([.05])),
                              (np.array([1, 0, 5]), np.array([5, 4, 5]), np.array([.05, .32, .16])),
                          ])
-def test_clopper_broadcast(xs, ns, alphas):
-    test1 = util.clopper_lower(xs, ns, alphas)
+def test_clopper_upper_broadcast(xs, ns, alphas):
+    test1 = util.clopper_upper(xs, ns, alphas)
     xs, ns, alphas, test1 = np.broadcast_arrays(xs, ns, alphas, test1)
     for x, n, alpha, l in zip(*list(map(np.ravel, (xs, ns, alphas, test1)))):
-        test2 = other_clopper_lower(x, n, alpha)
+        test2 = other_clopper_upper(x, n, alpha)
         assert np.isclose(test2, l)
