@@ -2,6 +2,7 @@
 import numpy as np
 import analysis_funcs as af
 import util
+import scipy.stats
 
 #%%
 n0 = 100000
@@ -99,3 +100,8 @@ def test_optimal_lower_beta():
     opt_beta = af.optimal_lower_beta(datapoint, alpha, c, i)
     tl = af.total_lower(datapoint, alpha, alpha / 4, c, i)
     assert af.total_lower(datapoint, alpha, opt_beta, c, i) >= tl
+
+
+#%%
+prior = scipy.stats.dirichlet(np.ravel(datapoint[:, :, 0]) + np.ones(4)/4.)
+af.get_optimal_betas(prior, af.log_width_cost, n0, n1, alpha/2, alpha/2, c, i)

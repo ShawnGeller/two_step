@@ -6,7 +6,6 @@ import scipy.optimize
 import scipy.stats
 
 import util
-import analysis_funcs
 
 
 def other_clopper_lower(x, n, alpha):

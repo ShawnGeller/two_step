@@ -7,12 +7,15 @@ import scipy.optimize
 from util import clopper_upper, clopper_lower
 
 
-def point_at_nominal(nominal_meas, nominal_prep):
+def point_at_nominal(nominal_meas, nominal_prep, other_meas=None):
+    if other_meas is None:
+        other_meas = nominal_meas
+    # Column sums are 1.
     return np.array([
         [[1-nominal_prep-2*nominal_meas, nominal_prep],
-         [nominal_meas, nominal_meas]],
-        [[nominal_meas, nominal_meas],
-         [nominal_prep, 1-nominal_prep-2*nominal_meas]]
+         [nominal_meas, other_meas]],
+        [[nominal_meas, other_meas],
+         [nominal_prep, 1-nominal_prep-2*other_meas]]
     ])
 
 
@@ -103,6 +106,7 @@ def optimal_lower_beta(data, alpha, c, i):
 
 def log_width_cost(alpha_lower, alpha_upper, n0, n1, c, i, beta_lower, beta_upper):
     def fn(r):
+        r = np.reshape(r, (2, 2))
         d = point_to_data(n0, n1, r)
         u = total_upper(d, alpha_upper, beta_upper, c, i)
         l = total_lower(d, alpha_lower, beta_lower, c, i)
@@ -112,6 +116,7 @@ def log_width_cost(alpha_lower, alpha_upper, n0, n1, c, i, beta_lower, beta_uppe
 
 def width_cost(alpha_lower, alpha_upper, n0, n1, c, i, beta_lower, beta_upper):
     def fn(r):
+        r = np.reshape(r, (2, 2))
         d = point_to_data(n0, n1, r)
         u = total_upper(d, alpha_upper, beta_upper, c, i)
         l = total_lower(d, alpha_lower, beta_lower, c, i)
@@ -120,6 +125,8 @@ def width_cost(alpha_lower, alpha_upper, n0, n1, c, i, beta_lower, beta_upper):
 
 
 def get_optimal_betas(prior, cost, n0, n1, alpha_lower, alpha_upper, c, i):
-    def fn(beta_lower, beta_upper):
+    def fn(betas):
+        beta_lower, beta_upper = betas
         return prior.expect(cost(alpha_lower, alpha_upper, n0, n1, c, i, beta_lower, beta_upper))
-    return scipy.optimize.minimize(fn, np.array([alpha_lower/2, alpha_upper/2]), bounds=[(0., alpha_lower/2), (0., alpha_upper/2)]).x
+    return scipy.optimize.minimize(fn, np.array([alpha_lower/2, alpha_upper/2]),
+                                   bounds=scipy.optimize.Bounds(np.zeros(2, dtype=float), np.array([alpha_lower, alpha_upper]))).x
