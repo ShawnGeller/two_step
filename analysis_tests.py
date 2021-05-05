@@ -105,3 +105,15 @@ def test_optimal_lower_beta():
 #%%
 prior = scipy.stats.dirichlet(np.ravel(datapoint[:, :, 0]) + np.ones(4)/4.)
 af.get_optimal_betas(prior, af.log_width_cost, n0, n1, alpha/2, alpha/2, c, i)
+
+
+#%%
+max_point = af.point_at_nominal(1e-5, 1e-2, 1e-4)
+af.max_loss(max_point, .32/2, .001, n0, n1, c, i)
+#%%
+af.max_loss(max_point, alpha/2, .001, n0, n1, c, i)
+#%%
+max_point = af.point_at_nominal(1e-5, 1e-2, 1e-4)
+af.max_loss(max_point, .32/2, .001, n0, n1, c, 1)
+#%%
+af.max_loss(max_point, alpha/2, .001, n0, n1, c, 1)

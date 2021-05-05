@@ -7,10 +7,14 @@ import scipy.optimize
 from util import clopper_upper, clopper_lower
 
 
-def point_at_nominal(nominal_meas, nominal_prep, other_meas=None):
+def point_at_nominal(nominal_meas, nominal_prep, other_meas=None, i=0):
     if other_meas is None:
         other_meas = nominal_meas
     # Column sums are 1.
+    if i:
+        tmp = nominal_meas
+        nominal_meas = other_meas
+        other_meas = tmp
     return np.array([
         [[1-nominal_prep-2*nominal_meas, nominal_prep],
          [nominal_meas, other_meas]],
@@ -104,29 +108,46 @@ def optimal_lower_beta(data, alpha, c, i):
     return scipy.optimize.minimize_scalar(fn, alpha/6, bounds=(0., alpha/3), method='bounded').x
 
 
-def log_width_cost(alpha_lower, alpha_upper, n0, n1, c, i, beta_lower, beta_upper):
-    def fn(r):
-        r = np.reshape(r, (2, 2))
-        d = point_to_data(n0, n1, r)
-        u = total_upper(d, alpha_upper, beta_upper, c, i)
-        l = total_lower(d, alpha_lower, beta_lower, c, i)
-        return np.log(u-l)
-    return fn
+def upper_loss(data, alpha, beta, c, i):
+    upp_p = upper_reference_point(data_to_point(data), c, i)
+    beta_opt = optimal_upper_beta(data, alpha, c, i)
+    d1 = total_upper(data, alpha, beta, c, i) - upp_p
+    d2 = total_upper(data, alpha, beta_opt, c, i) - upp_p
+    return 0 if np.isclose(upp_p, 0) else np.abs(d1 - d2) / upp_p
 
 
-def width_cost(alpha_lower, alpha_upper, n0, n1, c, i, beta_lower, beta_upper):
-    def fn(r):
-        r = np.reshape(r, (2, 2))
-        d = point_to_data(n0, n1, r)
-        u = total_upper(d, alpha_upper, beta_upper, c, i)
-        l = total_lower(d, alpha_lower, beta_lower, c, i)
-        return u-l
-    return fn
+def lower_loss(data, alpha, beta, c, i):
+    low_p = lower_reference_point(data_to_point(data), c, i)
+    beta_opt = optimal_lower_beta(data, alpha, c, i)
+    d1 = total_lower(data, alpha, beta, c, i) - low_p
+    d2 = total_lower(data, alpha, beta_opt, c, i) - low_p
+    return 0 if np.isclose(low_p, 0) else np.abs(d1 - d2) / low_p
 
 
-def get_optimal_betas(prior, cost, n0, n1, alpha_lower, alpha_upper, c, i):
-    def fn(betas):
-        beta_lower, beta_upper = betas
-        return prior.expect(cost(alpha_lower, alpha_upper, n0, n1, c, i, beta_lower, beta_upper))
-    return scipy.optimize.minimize(fn, np.array([alpha_lower/2, alpha_upper/2]),
-                                   bounds=scipy.optimize.Bounds(np.zeros(2, dtype=float), np.array([alpha_lower, alpha_upper]))).x
+def exclude_0(max_range, num_points):
+    return np.linspace(max_range / (num_points + 1), max_range, num=num_points, endpoint=False)
+
+
+def max_loss(max_point, alpha, beta, n0, n1, c, i, num_points=10):
+    ni = not_i(i)
+    r110_max = max_point[ni, ni, i]
+    r100_max = max_point[ni, i, i]
+    r011_max = max_point[i, ni, ni]
+    upp_l = 0.
+    low_l = 0.
+    low_max_point = max_point
+    upp_max_point = max_point
+    for r100 in exclude_0(r100_max, num_points):
+        for r110 in exclude_0(r110_max, num_points):
+            for r011 in exclude_0(r011_max, num_points):
+                point = point_at_nominal(r100, r110, r011, i)
+                data = point_to_data(n0, n1, point)
+                upp_cand = upper_loss(data, alpha, beta, c, i)
+                low_cand = lower_loss(data, alpha, beta, c, i)
+                if upp_cand > upp_l:
+                    upp_l = upp_cand
+                    upp_max_point = point
+                if low_cand > low_l:
+                    low_l = low_cand
+                    low_max_point = point
+    return low_l, upp_l, low_max_point, upp_max_point
