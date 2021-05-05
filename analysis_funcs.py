@@ -81,7 +81,7 @@ def total_upper(data, alpha, beta, c, i):
 
 
 def total_lower(data, alpha, beta, c, i):
-    return bare_at_lower(data, alpha - 3*beta, i) - lowerb_at_upper(data, beta, c, i)
+    return max(bare_at_lower(data, alpha - 3*beta, i) - lowerb_at_upper(data, beta, c, i), 0)
 
 
 def upper_reference_point(r, c, i):
@@ -89,7 +89,7 @@ def upper_reference_point(r, c, i):
 
 
 def lower_reference_point(r, c, i):
-    return bare(r, i) - lowerb(r, c, i)
+    return max(bare(r, i) - lowerb(r, c, i), 0)
 
 
 def optimal_upper_beta(data, alpha, c, i):
