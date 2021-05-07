@@ -113,19 +113,19 @@ def upper_loss(data, alpha, beta, c, i):
     beta_opt = optimal_upper_beta(data, alpha, c, i)
     d1 = total_upper(data, alpha, beta, c, i) - upp_p
     d2 = total_upper(data, alpha, beta_opt, c, i) - upp_p
-    return 0 if np.isclose(upp_p, 0) else np.abs(d1 - d2) / upp_p
+    return 0 if np.isclose(upp_p, 0) else np.abs(d1 - d2) / d2
 
 
 def lower_loss(data, alpha, beta, c, i):
     low_p = lower_reference_point(data_to_point(data), c, i)
     beta_opt = optimal_lower_beta(data, alpha, c, i)
-    d1 = total_lower(data, alpha, beta, c, i) - low_p
-    d2 = total_lower(data, alpha, beta_opt, c, i) - low_p
-    return 0 if np.isclose(low_p, 0) else np.abs(d1 - d2) / low_p
+    d1 = low_p - total_lower(data, alpha, beta, c, i)
+    d2 = low_p - total_lower(data, alpha, beta_opt, c, i)
+    return 0 if np.isclose(low_p, 0) else np.abs(d1 - d2) / d2
 
 
 def exclude_0(max_range, num_points):
-    return np.linspace(max_range / (num_points + 1), max_range, num=num_points, endpoint=False)
+    return np.linspace(max_range / (num_points), max_range, num=num_points)
 
 
 def max_loss(max_point, alpha, beta, n0, n1, c, i, num_points=10):

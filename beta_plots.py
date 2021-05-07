@@ -37,7 +37,7 @@ def compute_beta_range(alphas, data, c, i, num_points=30):
     beta_max = 0
     for alpha in alphas:
         beta_max = max(beta_max, af.optimal_upper_beta(data, alpha, c, i))
-    beta_max = beta_max * 2
+    beta_max = beta_max /10 * num_points
     beta_range = np.linspace(beta_max / (num_points + 1), beta_max,
                              num=num_points, endpoint=False)
     return beta_range
@@ -63,10 +63,9 @@ def vary_beta_plot(alphas, data, c, i, colors=None, num_points=30,
             opt_upp_bet = af.optimal_upper_beta(data, alpha / xx, c, i)
             t_upp = af.total_upper(data, alpha / xx, opt_upp_bet, c, i)
             ax.plot(opt_upp_bet, t_upp, 'mo')
-            if xx == 2:
-                opt_low_bet = af.optimal_lower_beta(data, alpha / xx, c, i)
-                t_low = af.total_lower(data, alpha / xx, opt_low_bet, c, i)
-                ax.plot(opt_low_bet, t_low, 'mo')
+            opt_low_bet = af.optimal_lower_beta(data, alpha / xx, c, i)
+            t_low = af.total_lower(data, alpha / xx, opt_low_bet, c, i)
+            ax.plot(opt_low_bet, t_low, 'mo')
         ax.plot(beta_range, one_sided_vary_beta(alpha, data, c, i, beta_range),
                 color=color, linestyle='-',
                 label=r"one sided, level = {:.2f}".format(1 - alpha))
@@ -109,7 +108,7 @@ def main(args):
     data = af.point_to_data(args.n0, args.n1,
                             af.point_at_nominal(args.r100, args.r001,
                                                 args.r011))
-    vary_beta_plot(alphas, data, args.c, args.i, filename=args.filename)
+    vary_beta_plot(alphas, data, args.c, args.i, num_points=args.num_points, filename=args.filename)
     for alpha in alphas:
         print("alpha = {:.2e}, optimal upper beta = {:.2e}".format(alpha,
                                                                    af.optimal_upper_beta(
@@ -135,8 +134,10 @@ if __name__ == "__main__":
                         help="Nominal measurement error to compute at. Will take r100 = r010")
     parser.add_argument("--r011", type=float, default=1e-4,
                         help="Nominal measurement error to compute at. Will take r011 = r101")
-    parser.add_argument("--r001", type=float, default=1e-4,
+    parser.add_argument("--r001", type=float, default=1e-2,
                         help="Nominal prep error to compute at. Will take r001 = r110")
+    parser.add_argument("--num-points", type=int, default=30,
+                        help="Number of points")
     parser.add_argument("i", type=int, help="The initial prep, either 0 or 1.")
     args = parser.parse_args()
     main(args)

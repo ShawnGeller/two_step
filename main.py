@@ -22,7 +22,7 @@ def prepare_filename(filename):
 
 def parse_input(nstr):
     ns = nstr.split(",")
-    ns = np.array([int(n) for n in ns]).reshape((2, 2, 2))
+    ns = np.array([int(n) for n in ns]).reshape((2, 2, 2), order='C')
     ns = np.moveaxis(ns, (0, 1, 2), (2, 1, 0))
     return ns
 
@@ -30,8 +30,7 @@ def parse_input(nstr):
 def parse_input_file(input_filename):
     with open(input_filename) as f:
         reader = csv.reader(f)
-        data = np.array([int(row[0]) for row in reader])
-    data = data.reshape((2, 2, 2))
+        data = np.array([int(row[0]) for row in reader]).reshape((2, 2, 2))
     data = np.moveaxis(data, (0, 1, 2), (2, 1, 0))
     return data
 
@@ -50,8 +49,8 @@ def main(args):
     allbounds = np.array(
         [
             [i] +
-            [f(af.data_to_point(data), args.c, i) for f in [af.upper_reference_point, af.lower_reference_point]] +
-            [f(data, alpha, args.beta, args.c, i) for alpha in alphas for f in [af.total_lower, af.total_upper]]
+            [f(af.data_to_point(data), args.c, i) for f in [af.lower_reference_point, af.upper_reference_point]] +
+            [f(data, alpha/2, args.beta, args.c, i) for alpha in alphas for f in [af.total_lower, af.total_upper]]
             for i in range(2)
         ])
     filename = prepare_filename(args.filename)
