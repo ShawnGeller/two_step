@@ -17,7 +17,7 @@ def do_box(ax, lsts):
             "mean": upper_ref,
         }
         dics.append(dic)
-    meanlineprops = dict(linestyle='-', linewidth=2.5, color='orange')
+    meanlineprops = dict(linestyle='-', linewidth=1, color='orange')
     boxplot = ax.bxp(dics, showfliers=False, showmeans=True, meanprops=meanlineprops, meanline=True)
 
     for i in range(len(boxplot['boxes'])):
@@ -49,35 +49,45 @@ def do_box(ax, lsts):
         captop = caps[2*i+1].get_ydata()[0]
 
         # Make some labels on the figure using the values derived above
-        ax.text(xlabel, median,
-                'reference point = {:.1e}'.format(median), va='center')
-        ax.text(xlabel, pc25,
-                r'1 $\sigma$ lower = {:.1e}'.format(pc25), va='center')
         ax.text(xlabel, pc75,
-                r'1 $\sigma$ upper = {:.1e}'.format(pc75), va='center')
-        ax.text(xlabel, capbottom,
-                r'2 $\sigma$ lower = {:.1e}'.format(capbottom), va='center')
+                r'1 $\sigma$ = {:.1e}'.format(pc75), va='center')
         ax.text(xlabel, captop,
-                r'2 $\sigma$ upper = {:.1e}'.format(captop), va='center')
+                r'2 $\sigma$ = {:.1e}'.format(captop), va='center')
+        ax.text(xlabel, median,
+                'ref = {:.1e}'.format(median), va='center')
+        if ~np.isclose(median, pc25):
+            ax.text(xlabel, pc25,
+                    r'1 $\sigma$ = {:.1e}'.format(pc25), va='center')
+        if ~np.isclose(pc25, capbottom):
+            ax.text(xlabel, capbottom,
+                    r'2 $\sigma$ = {:.1e}'.format(capbottom), va='center')
+    ax.set_xticks([np.mean(med.get_xdata()) for med in boxplot['medians']])
+    ax.set_xticklabels([r"$S_+$", r"$S_-$"])
+    ax.set_yticks([])
+    ax.set_title("490 GHz Infidelities")
 
 
 
-def main(args):
-    fn = args.input_file
+# def main(args):
+#     fn = args.input_file
+def main(fn):
     with open(fn, 'r') as f:
         lns = f.readlines()
-    lns = lns[1:2]
+    lns = lns[1:]
     lns = [list(map(float, ln.split(",")))[1:] for ln in lns]
     fig = plt.figure()
     ax = fig.gca()
-    ax.axis('off')
+    for d in ["left", "top", "bottom", "right"]:
+        ax.spines[d].set_visible(False)
+    # ax.axis('off')
     do_box(ax, lns)
-    plt.savefig("490ghzboxplot.svg")
+    # plt.savefig("490ghzboxplot.svg")
     plt.show()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("input_file", metavar="input-file", type=str)
-    args = parser.parse_args()
-    main(args)
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument("input_file", metavar="input-file", type=str)
+    # args = parser.parse_args()
+    # main(args)
+    main("/home/shawn/redundant_fidelity/paper_data/490ghzoutput.csv")
