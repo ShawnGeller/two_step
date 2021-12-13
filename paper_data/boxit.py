@@ -90,4 +90,4 @@ if __name__ == "__main__":
     # parser.add_argument("input_file", metavar="input-file", type=str)
     # args = parser.parse_args()
     # main(args)
-    main("/home/shawn/redundant_fidelity/paper_data/490ghzoutput.csv")
+    main("/home/shawn/two_step/paper_data/490ghzoutput.csv")

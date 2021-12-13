@@ -17,9 +17,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # -- Project information -----------------------------------------------------
 
-project = 'redundant_fidelity'
-copyright = '2021, Author'
-author = 'Author'
+project = 'two_step'
+author = """Shawn Geller and Alexander Kwiatkowski"""
 
 
 # -- General configuration ---------------------------------------------------
