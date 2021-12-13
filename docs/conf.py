@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, '/home/shawn/redundant_fidelity')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
 # -- Project information -----------------------------------------------------
