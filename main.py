@@ -59,7 +59,7 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser("Computes confidence intervals at 1 and 2 sigma.")
+    parser = argparse.ArgumentParser("Computes confidence intervals at 1 and 2 sigma.", formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("--c", type=float, default=.95,
                         help="The parameter c, given a lower bound on correct state prep, correct measurement, QND-ness. Default is .95")
     parser.add_argument("--beta", type=float, default=.001,
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-i", "--input-filename", type=str,
                         help="CSV file with counts. Format is a single column, with counts in order"
-                             "n000 \n n100 \n n010 \n n110 \n n001 \n n101 \n n011 \n n111")
+                             "\nn000\nn100\nn010\nn110\nn001\nn101\nn011\nn111")
     group.add_argument("-n", "--counts", type=str,
                         help="Input a string of counts, with format\n"
                              "n000,n100,n010,n110,n001,n101,n011,n111")
