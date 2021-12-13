@@ -104,7 +104,7 @@ def test_optimal_lower_beta():
 
 #%%
 prior = scipy.stats.dirichlet(np.ravel(datapoint[:, :, 0]) + np.ones(4)/4.)
-af.get_optimal_betas(prior, af.log_width_cost, n0, n1, alpha/2, alpha/2, c, i)
+# af.get_optimal_betas(prior, af.log_width_cost, n0, n1, alpha/2, alpha/2, c, i)
 
 
 #%%
