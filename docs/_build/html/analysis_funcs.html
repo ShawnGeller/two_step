@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>analysis_funcs module &#8212; redundant_fidelity  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="util module" href="util.html" />
+    <link rel="prev" title="Welcome to redundant_fidelity’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-analysis_funcs">
+<span id="analysis-funcs-module"></span><h1>analysis_funcs module<a class="headerlink" href="#module-analysis_funcs" title="Permalink to this headline">¶</a></h1>
+<p>An implementation of statistical analysis in the supplementary material of
+<a class="reference internal" href="#arxiv" id="id1"><span>[arXiv]</span></a></p>
+<p>This is a Python implementation of the two-step model used in the supplementary
+information of the paper “High-fidelity indirect readout of trapped-ion
+hyperfine qubits”. We refer to that document for details.</p>
+<dl class="citation">
+<dt class="label" id="arxiv"><span class="brackets"><a class="fn-backref" href="#id1">arXiv</a></span></dt>
+<dd><p>arXiv xxxx.xxxxx</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.bare">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">bare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#bare"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.bare" title="Permalink to this definition">¶</a></dt>
+<dd><p>The “bare” measurement error.</p>
+<p>This is the lowest order estimate of the measurement infidelity, given by
+<span class="math notranslate nohighlight">\(\hat{r}(\neg i, i|i)\)</span>.</p>
+<p>Literally returns <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">point[not_i(i),</span> <span class="pre">i,</span> <span class="pre">i]</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.bare_at_lower">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">bare_at_lower</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#bare_at_lower"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.bare_at_lower" title="Permalink to this definition">¶</a></dt>
+<dd><p>The lowest order measurement infidelity at the confidence lower bound.</p>
+<p>Similar to</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">bare_at_upper()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.bare_at_upper">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">bare_at_upper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#bare_at_upper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.bare_at_upper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The lowest order measurement infidelity at the confidence upper bound.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">bare()</span></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Counts to compute for.</p></li>
+<li><p><strong>alpha</strong> – Significance level</p></li>
+<li><p><strong>i</strong> – Indended prep</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Literally returns <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">bare(upper_from_data(data,</span> <span class="pre">alpha),</span> <span class="pre">i)</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.data_to_point">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">data_to_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#data_to_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.data_to_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>From a set of data <span class="math notranslate nohighlight">\(n\)</span>, returns the corresponding <span class="math notranslate nohighlight">\(\hat{r}\)</span>.</p>
+<p>This implements equation S.20.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – Counts.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The frequencies corresponding to the counts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.exclude_0">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">exclude_0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#exclude_0"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.exclude_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.lower_from_data">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">lower_from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#lower_from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.lower_from_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the <a class="reference external" href="https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Clopper%E2%80%93Pearson_interval">Clopper-Pearson</a> confidence lower bounds from the data.</p>
+<p>The returned array is of the same shape as the input.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">clopper_lower()</span></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – <span class="math notranslate nohighlight">\(n(x, y, z)\)</span> in the supplement.</p></li>
+<li><p><strong>alpha</strong> – The significance level to compute the lower bounds at.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The confidence lower bounds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.lower_loss">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">lower_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#lower_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.lower_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>A loss function to analyze quality of the choice for <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">upper_loss()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.lower_reference_point">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">lower_reference_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#lower_reference_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.lower_reference_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is
+<span class="math notranslate nohighlight">\(f(r, c, x) \equiv r(\neg x, x|x) - l(r,c,x)\)</span></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">upper_reference_point()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.lowerb">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">lowerb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#lowerb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.lowerb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes an upper bound to the higher order corrections for the
+estimate of infidelity.</p>
+<p>Equation S.18 in the supplement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – The frequencies to compute the upper bound for.</p></li>
+<li><p><strong>c</strong> – The parameter used to bound the infidelities.</p></li>
+<li><p><strong>i</strong> – Initial prep.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(l(r, c, i)\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.lowerb_at_upper">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">lowerb_at_upper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#lowerb_at_upper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.lowerb_at_upper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes <span class="math notranslate nohighlight">\(l(\underline{r}(\alpha, n), c, x)\)</span>.</p>
+<p>Similar to
+.. seealso:: <code class="xref py py-func docutils literal notranslate"><span class="pre">upperb_at_upper()</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.max_loss">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">max_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#max_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.max_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.not_i">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">not_i</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#not_i"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.not_i" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">(i+1)%2</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.optimal_lower_beta">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">optimal_lower_beta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#optimal_lower_beta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.optimal_lower_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given data and a fixed total significance, finds the optimal
+significance to assign to the higher order corrections.</p>
+<p>Optimal in the sense of giving the tightest lower bound.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">optimal_upper_beta()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.optimal_upper_beta">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">optimal_upper_beta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#optimal_upper_beta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.optimal_upper_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given data and a fixed total significance, finds the optimal
+significance to assign to the higher order corrections.</p>
+<p>Optimal in the sense of giving the tightest upper bound.</p>
+<p>Note that this is
+a function exclusively used before the true data is seen, only used to find
+a good choice for <span class="math notranslate nohighlight">\(\beta\)</span> . Using this function after the data is
+seen is cheating, and does not give a legitimate confidence interval.</p>
+<p>This is equation S.24</p>
+<p>Uses <code class="docutils literal notranslate"><span class="pre">scipy.optimize.minimize_scalar</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Training data to compute confidence upper bound for.</p></li>
+<li><p><strong>alpha</strong> – Significance level.</p></li>
+<li><p><strong>c</strong> – <span class="math notranslate nohighlight">\(c\)</span></p></li>
+<li><p><strong>i</strong> – Intended preparation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(\beta^*(n, \alpha, c, i)\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.point_at_nominal">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">point_at_nominal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nominal_meas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nominal_prep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_meas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#point_at_nominal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.point_at_nominal" title="Permalink to this definition">¶</a></dt>
+<dd><p>From a pair of “nominal” measurement and state prep errors, makes a
+distribution described by those errors.</p>
+<p>For a “nominal measurement error” <span class="math notranslate nohighlight">\(e_m\)</span> and a “nominal preparation
+error” <span class="math notranslate nohighlight">\(e_p\)</span>, this function prepares the distribution</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}r(\neg i, \neg i|i) &amp;= e_p \\
+r(i, i, |\neg i) &amp;= e_p \\
+r(\neg i, i|i) &amp;= e_m \\
+r(i, \neg i|i) &amp;= e_m \\
+r(i,\neg i|\neg i) &amp;= e_m \\
+r(\neg i,i|\neg i) &amp;= e_m \\\end{split}\]</div>
+<p>and the other two components of the probability distribution such that the
+appropriate normalization constraints are satisfied. If <code class="docutils literal notranslate"><span class="pre">other_meas</span></code> is
+specified, <span class="math notranslate nohighlight">\(r(i,\neg i|\neg i)\)</span> and <span class="math notranslate nohighlight">\(r(\neg i,i|\neg i)\)</span> are
+set to that instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nominal_meas</strong> (<em>float</em>) – Should be larger than 0, less than 1.</p></li>
+<li><p><strong>other_meas</strong> – Defaults to <code class="docutils literal notranslate"><span class="pre">nominal_meas</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A probability distribution, with axes such that
+<code class="docutils literal notranslate"><span class="pre">point_at_nominal(a,</span> <span class="pre">b)[x,</span> <span class="pre">y,</span> <span class="pre">z]</span> <span class="pre">=</span> <span class="pre">r(x,</span> <span class="pre">y|z)</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.point_to_data">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">point_to_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#point_to_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.point_to_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>From a pair of “total number of experiments in prep 0”,
+“total number of experiments in prep 1” and a point <span class="math notranslate nohighlight">\(r\)</span>, returns
+counts that round to the given <span class="math notranslate nohighlight">\(r\)</span>.</p>
+<p>The rounding is such that the total numbers <span class="math notranslate nohighlight">\(N_i\)</span> are preserved.
+This is done by subtracting any discrepancy from <span class="math notranslate nohighlight">\(n(i, i, i)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n0</strong> – Total number of experiments with prep 0.
+This quantity is <span class="math notranslate nohighlight">\(N_0\)</span> in the supplement.</p></li>
+<li><p><strong>n1</strong> – Total number of experiments with prep 1.
+This quantity is <span class="math notranslate nohighlight">\(N_1\)</span> in the supplement.</p></li>
+<li><p><strong>point</strong> – The point <span class="math notranslate nohighlight">\(r\)</span> to create data from.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>Counts. Indexed in the same way that <code class="docutils literal notranslate"><span class="pre">point</span></code> is, namely:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">point_to_data</span><span class="p">(</span><span class="n">n0</span><span class="p">,</span> <span class="n">n1</span><span class="p">,</span> <span class="n">point</span><span class="p">)[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">n</span></code> in the above refers to the <span class="math notranslate nohighlight">\(n\)</span> in the supplement.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.total_lower">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">total_lower</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#total_lower"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.total_lower" title="Permalink to this definition">¶</a></dt>
+<dd><p>The confidence lower bound for the measurement infidelity.</p>
+<p>If we obtain something negative from subtracting off the higher order
+corrections, we return 0.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">total_upper()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.total_upper">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">total_upper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#total_upper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.total_upper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The confidence upper bound for the measurement infidelity.</p>
+<p>Computed using the union bound.
+This is Equation S.21 in the supplement for <span class="math notranslate nohighlight">\(\gamma = 3\beta\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The counts to compute for.</p></li>
+<li><p><strong>alpha</strong> – Total significance level.</p></li>
+<li><p><strong>beta</strong> – The significance to “give to” the higher order terms.</p></li>
+<li><p><strong>c</strong> – <span class="math notranslate nohighlight">\(c\)</span>, the coarse lower bound on all the fidelities.</p></li>
+<li><p><strong>i</strong> – Intended prep</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The upper bounds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.upper_from_data">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">upper_from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#upper_from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.upper_from_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the <a class="reference external" href="https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Clopper%E2%80%93Pearson_interval">Clopper-Pearson</a> confidence upper bounds from the data.</p>
+<p>The returned array is of the same shape as the input.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">clopper_upper()</span></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – <span class="math notranslate nohighlight">\(n(x, y, z)\)</span> in the supplement.</p></li>
+<li><p><strong>alpha</strong> – The significance level to compute the upper bounds at.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(\overline{r(x, y|z)}(\alpha, n)\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.upper_loss">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">upper_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#upper_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.upper_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>A loss function to analyze quality of the choice for <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<p>Equation S.25.</p>
+<p>Note that this function is only used for training purposes, we use this only
+on artificial training counts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The data to compute for.</p></li>
+<li><p><strong>alpha</strong> – The total significance.</p></li>
+<li><p><strong>beta</strong> – Significance for the higher order terms.</p></li>
+<li><p><strong>c</strong> – <span class="math notranslate nohighlight">\(c\)</span></p></li>
+<li><p><strong>i</strong> – Intended preparation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(d(\beta, n, \alpha, c, i)\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.upper_reference_point">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">upper_reference_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#upper_reference_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.upper_reference_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is
+<span class="math notranslate nohighlight">\(g(r, c, x) \equiv r(\neg x, x|x) + u(r,c,x)\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – <span class="math notranslate nohighlight">\(r\)</span></p></li>
+<li><p><strong>c</strong> – <span class="math notranslate nohighlight">\(c\)</span></p></li>
+<li><p><strong>i</strong> – Intended prep.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(f\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.upperb">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">upperb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#upperb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.upperb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes an upper bound to the higher order corrections for the
+estimate of infidelity.</p>
+<p>Equation S.16 in the supplement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> – The frequencies to compute the upper bound for.</p></li>
+<li><p><strong>c</strong> – The parameter used to bound the infidelities.</p></li>
+<li><p><strong>i</strong> – Initial prep.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(u(r, c, i)\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis_funcs.upperb_at_upper">
+<span class="sig-prename descclassname"><span class="pre">analysis_funcs.</span></span><span class="sig-name descname"><span class="pre">upperb_at_upper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analysis_funcs.html#upperb_at_upper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analysis_funcs.upperb_at_upper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes <span class="math notranslate nohighlight">\(u(\overline{r}(\alpha, n), c, x)\)</span>.</p>
+<p>This is used in Equation S.22</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – <span class="math notranslate nohighlight">\(n\)</span></p></li>
+<li><p><strong>alpha</strong> – The significance level to compute the confidence upper bound
+at.</p></li>
+<li><p><strong>c</strong> – <span class="math notranslate nohighlight">\(c\)</span></p></li>
+<li><p><strong>i</strong> – Intended preparation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The upper bounds
+<code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">upperb(upper_from_data(data,</span> <span class="pre">alpha),</span> <span class="pre">c,</span> <span class="pre">i)</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">redundant_fidelity</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">analysis_funcs module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">util module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to redundant_fidelity’s documentation!</a></li>
+      <li>Next: <a href="util.html" title="next chapter">util module</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/analysis_funcs.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
