@@ -150,7 +150,7 @@ def upper_from_data(data, alpha):
 
     The returned array is of the same shape as the input.
 
-    .. seealso:: :py:func:`~two_step.util.clopper_upper`
+    .. seealso:: :py:func:`~util.clopper_upper`
     .. _`Clopper-Pearson`: https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Clopper%E2%80%93Pearson_interval
 
     :param data: :math:`n(x, y, z)` in the supplement.
@@ -165,7 +165,7 @@ def lower_from_data(data, alpha):
 
     The returned array is of the same shape as the input.
 
-    .. seealso:: :py:func:`~two_step.util.clopper_lower`
+    .. seealso:: :py:func:`~util.clopper_lower`
     .. _`Clopper-Pearson`: https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Clopper%E2%80%93Pearson_interval
 
     :param data: :math:`n(x, y, z)` in the supplement.
@@ -195,7 +195,7 @@ def lowerb_at_upper(data, alpha, c, i):
     r"""Computes :math:`l(\underline{r}(\alpha, n), c, x)`.
 
     Similar to
-    .. seealso:: :py:func:`~two_step.analysis_funcs.upperb_at_upper`
+    .. seealso:: :py:func:`~analysis_funcs.upperb_at_upper`
     """
     return lowerb(upper_from_data(data, alpha), c, i)
 
@@ -203,7 +203,7 @@ def lowerb_at_upper(data, alpha, c, i):
 def bare_at_upper(data, alpha, i):
     r"""The lowest order measurement infidelity at the confidence upper bound.
 
-    .. seealso:: :py:func:`~two_step.analysis_funcs.bare`
+    .. seealso:: :py:func:`~analysis_funcs.bare`
 
     :param data: Counts to compute for.
     :param alpha: Significance level
@@ -218,7 +218,7 @@ def bare_at_lower(data, alpha, i):
 
     Similar to
 
-    .. seealso:: :py:func:`~two_step.analysis_funcs.bare_at_upper`
+    .. seealso:: :py:func:`~analysis_funcs.bare_at_upper`
     """
     return bare(lower_from_data(data, alpha), i)
 
@@ -245,7 +245,7 @@ def total_lower(data, alpha, beta, c, i):
     If we obtain something negative from subtracting off the higher order
     corrections, we return 0.
 
-    .. seealso:: :py:func:`~two_step.analysis_funcs.total_upper`
+    .. seealso:: :py:func:`~analysis_funcs.total_upper`
     """
     return max(bare_at_lower(data, alpha - 3*beta, i) - lowerb_at_upper(data, beta, c, i), 0)
 
@@ -270,7 +270,7 @@ def lower_reference_point(r, c, i):
     This is
     :math:`f(r, c, x) \equiv r(\neg x, x|x) - l(r,c,x)`
 
-    .. seealso:: :py:func:`~two_step.analysis_funcs.upper_reference_point`
+    .. seealso:: :py:func:`~analysis_funcs.upper_reference_point`
     """
     return max(bare(r, i) - lowerb(r, c, i), 0)
 
@@ -307,7 +307,7 @@ def optimal_lower_beta(data, alpha, c, i):
 
     Optimal in the sense of giving the tightest lower bound.
 
-    .. seealso:: :py:func:`~two_step.analysis_funcs.optimal_upper_beta`
+    .. seealso:: :py:func:`~analysis_funcs.optimal_upper_beta`
     """
     def fn(beta):
         return -total_lower(data, alpha, beta, c, i)
@@ -339,7 +339,7 @@ def upper_loss(data, alpha, beta, c, i):
 def lower_loss(data, alpha, beta, c, i):
     r"""A loss function to analyze quality of the choice for :math:`\beta`.
 
-    .. seealso:: :py:func:`~two_step.analysis_funcs.upper_loss`
+    .. seealso:: :py:func:`~analysis_funcs.upper_loss`
     """
     low_p = lower_reference_point(data_to_point(data), c, i)
     beta_opt = optimal_lower_beta(data, alpha, c, i)
